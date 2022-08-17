@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+import ItemPage from "../components/category-list";
 
 export default function Home() {
   return (
@@ -8,11 +9,13 @@ export default function Home() {
         <title>Assignment</title>
         <meta
           name="description"
-          content="Avenir IP Ltd. | One of the promising and fastest growing IT company in Bangladesh with the vision to develop cutting edge web and smartphone applications."
+          content=""
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-gray-100 text-gray-800">Hello World</div>
+      <div className=" text-gray-800">
+        <ItemPage />
+      </div>
     </div>
   );
 }
