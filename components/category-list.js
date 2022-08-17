@@ -3,20 +3,22 @@ import { useEffect, useState } from "react";
 
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { XCircleIcon } from "@heroicons/react/solid";
+import DialogModal from "./helper/dialogModal";
 import axios from "axios";
 
 const ItemPage = () => {
-  const [category, setCategory] = useState();
+  // const [category, setCategory] = useState("");
+  const [itemType, setItemType] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [unit, setUnitName] = useState("");
+  const [stockLimit, setStockLimit] = useState("");
 
-  // useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: "https://idbdev.com/motion2/public/api/product-is-here-caught-me",
-  //     responseType: "steam",
-  //   }).then((response) => {
-  //     setProducts(response.data);
-  //   });
-  // },[]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log("item is ", itemType);
+  console.log("item is ", itemName);
+  console.log("item is ", stockLimit);
 
   return (
     <div className=" text-gray-700 pt-20 mx-20 ">
@@ -26,6 +28,10 @@ const ItemPage = () => {
             name="itemType"
             id="type"
             className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer"
+            onChange={(event) => {
+              event.preventDefault;
+              setItemType(event.target.value);
+            }}
           >
             <option value="">Item Type</option>
             <option value="cottom">Cotton</option>
@@ -39,6 +45,10 @@ const ItemPage = () => {
           <input
             placeholder="Item Name"
             className="outline-none border rounded-sm p-1 text-center"
+            onChange={(event) => {
+              event.preventDefault;
+              setItemName(event.target.value);
+            }}
           />
         </div>
         <div className="flex items-center gap-1">
@@ -47,6 +57,10 @@ const ItemPage = () => {
               name="sub-category"
               id="sub-category"
               className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer"
+              onChange={(event) => {
+                event.preventDefault;
+                setSubCategory(event.target.value);
+              }}
             >
               <option value="">Sub-Category Name</option>
               <option value="t-shirt">T-Shirt</option>
@@ -55,7 +69,7 @@ const ItemPage = () => {
               <option value="pant">Pant</option>
             </select>
           </div>
-          <div className="flex w-8 ">
+          <div className="flex w-8" onClick={() => setIsOpen(true)}>
             <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
           </div>
         </div>
@@ -80,6 +94,10 @@ const ItemPage = () => {
           <input
             placeholder="Stock Limit"
             className="outline-none border rounded-sm p-1 text-center"
+            onChange={(event) => {
+              event.preventDefault;
+              setStockLimit(event.target.value);
+            }}
           />
         </div>
         <div className="flex gap-2">
@@ -91,8 +109,19 @@ const ItemPage = () => {
           </div>
         </div>
       </div>
+      <DialogModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };
 
 export default ItemPage;
+
+// useEffect(() => {
+//   axios({
+//     method: "get",
+//     url: "https://idbdev.com/motion2/public/api/product-is-here-caught-me",
+//     responseType: "steam",
+//   }).then((response) => {
+//     setProducts(response.data);
+//   });
+// },[]);
