@@ -1,24 +1,45 @@
 import React from "react";
 import { useEffect, useState } from "react";
-
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { XCircleIcon } from "@heroicons/react/solid";
-import DialogModal from "./helper/dialogModal";
 import axios from "axios";
+
+import SubCategoryAddModal from "./helper/sub-category-add-modal";
+import UnitAddModal from "./helper/unit-add-modal";
+
+let subCategoryItems = [
+  { name: "Tshirt", value: "tshirt" },
+  { name: "Shirt", value: "shirt" },
+  { name: "Pant", value: "pant" },
+  { name: "Polo", value: "polo" },
+];
+
+let items = [
+  { name: "Nylon", value: "nylon" },
+  { name: "Cotton", value: "cotton" },
+  { name: "Linen", value: "linen" },
+  { name: "Spandex", value: "spandex" },
+];
+let units = [
+  { name: "kg", value: "kg" },
+  { name: "pound", value: "pound" },
+];
 
 const ItemPage = () => {
   // const [category, setCategory] = useState("");
   const [itemType, setItemType] = useState("");
   const [itemName, setItemName] = useState("");
-  const [subCategory, setSubCategory] = useState("");
+  const [subCategory, setSubCategory] = useState([subCategoryItems]);
   const [unit, setUnitName] = useState("");
   const [stockLimit, setStockLimit] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [isUnitAddOpen, setUnitAddOpen] = useState(false);
 
-  console.log("item is ", itemType);
-  console.log("item is ", itemName);
-  console.log("item is ", stockLimit);
+  // console.log("item is ", itemType);
+  // console.log("item is ", itemName);
+  // console.log("item is ", stockLimit);
+  console.log("sub items inside are ", subCategoryItems);
 
   return (
     <div className=" text-gray-700 pt-20 mx-20 ">
@@ -34,11 +55,13 @@ const ItemPage = () => {
             }}
           >
             <option value="">Item Type</option>
-            <option value="cottom">Cotton</option>
-            <option value="nylon">Nylon</option>
-            <option value="linen">Linen</option>
-            <option value="silk">Silk</option>
-            <option value="wool">Wool</option>
+            {items.map((item) => {
+              return (
+                <option key={item.value} value="">
+                  {item.name}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div>
@@ -69,7 +92,7 @@ const ItemPage = () => {
               <option value="pant">Pant</option>
             </select>
           </div>
-          <div className="flex w-8" onClick={() => setIsOpen(true)}>
+          <div className="flex w-8" onClick={() => setCategoryOpen(true)}>
             <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
           </div>
         </div>
@@ -86,7 +109,7 @@ const ItemPage = () => {
               <option value="audi">Pound</option>
             </select>
           </div>
-          <div className="flex w-8">
+          <div className="flex w-8" onClick={() => setUnitAddOpen(true)}>
             <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
           </div>
         </div>
@@ -109,7 +132,12 @@ const ItemPage = () => {
           </div>
         </div>
       </div>
-      <DialogModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SubCategoryAddModal
+        isOpen={isCategoryOpen}
+        setIsOpen={setCategoryOpen}
+        subCategoryItems={subCategoryItems}
+      />
+      <UnitAddModal isOpen={isUnitAddOpen} setIsOpen={setUnitAddOpen} units={units} />
     </div>
   );
 };
