@@ -4,42 +4,55 @@ import { PlusCircleIcon } from "@heroicons/react/outline";
 import { XCircleIcon } from "@heroicons/react/solid";
 import axios from "axios";
 
-import SubCategoryAddModal from "./helper/sub-category-add-modal";
-import UnitAddModal from "./helper/unit-add-modal";
+import { items } from "../../lib/constants";
+import { baseUrl } from "../../lib/api";
+import SubCategoryAddModal from "../modal/sub-category-add-modal";
+import UnitAddModal from "../modal/unit-add-modal";
 
-let subCategoryItems = [
-  { name: "Tshirt", value: "tshirt" },
-  { name: "Shirt", value: "shirt" },
-  { name: "Pant", value: "pant" },
-  { name: "Polo", value: "polo" },
-];
-
-let items = [
-  { name: "Nylon", value: "nylon" },
-  { name: "Cotton", value: "cotton" },
-  { name: "Linen", value: "linen" },
-  { name: "Spandex", value: "spandex" },
-];
 let units = [
   { name: "kg", value: "kg" },
   { name: "pound", value: "pound" },
 ];
 
-const ItemAddComponent = () => {
-  // const [category, setCategory] = useState("");
+const ItemCreateComponent = () => {
   const [itemType, setItemType] = useState("");
   const [itemName, setItemName] = useState("");
-  const [subCategory, setSubCategory] = useState([subCategoryItems]);
+  const [subCategory, setSubCategory] = useState([]);
   const [unit, setUnitName] = useState("");
-  const [stockLimit, setStockLimit] = useState("");
+  const [stockLimit, setStockLimit] = useState();
 
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [isUnitAddOpen, setUnitAddOpen] = useState(false);
 
-  // console.log("item is ", itemType);
-  // console.log("item is ", itemName);
-  // console.log("item is ", stockLimit);
-  console.log("sub items inside are ", subCategoryItems);
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     const res = await axios.get(`${baseUrl}`);
+  //     setSubCategory(res.data.items.map((item)=>{return item.subCategory}));
+  //   };
+  //   fetchItems();
+  // }, []);
+  // console.log("subs are ", subCategory);
+
+  const body = {
+    type: itemType,
+    name: itemName,
+    subCategory: [subCategory],
+    unit: [unit],
+    stock: stockLimit,
+  };
+
+  const handleSubmit = async () => {
+    const res = await axios
+      .post(`${baseUrl}`, body)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  console.log("body is ", body);
 
   return (
     <div className=" text-gray-700 pt-20 mx-20 text-center font-medium text-xl cursor-default">
@@ -57,7 +70,7 @@ const ItemAddComponent = () => {
             <option value="">Item Type</option>
             {items.map((item) => {
               return (
-                <option key={item.value} value="">
+                <option key={item.name} value={`${item.name}`}>
                   {item.name}
                 </option>
               );
@@ -86,10 +99,13 @@ const ItemAddComponent = () => {
               }}
             >
               <option value="">Sub-Category Name</option>
-              <option value="t-shirt">T-Shirt</option>
-              <option value="shirt">Shirt</option>
-              <option value="hoodie">Hoodie</option>
-              <option value="pant">Pant</option>
+              {subCategory.map((item, i) => {
+                return (
+                  <option key={i} value={`${item}`}>
+                    {item}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="flex w-8" onClick={() => setCategoryOpen(true)}>
@@ -102,6 +118,10 @@ const ItemAddComponent = () => {
               name="unit"
               id="unit"
               className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer items-center"
+              onChange={(event) => {
+                event.preventDefault;
+                setUnitName(event.target.value);
+              }}
             >
               <option value="volvo">Unit Name</option>
               <option value="saab">KG</option>
@@ -125,7 +145,12 @@ const ItemAddComponent = () => {
         </div>
         <div className="flex gap-2">
           <div className="w-8">
-            <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
+            <PlusCircleIcon
+              className="text-fuchsia-500 cursor-pointer"
+              onClick={() => {
+                handleSubmit();
+              }}
+            />
           </div>
           <div className="w-8">
             <XCircleIcon className="text-red-500 cursor-pointer" />
@@ -135,14 +160,14 @@ const ItemAddComponent = () => {
       <SubCategoryAddModal
         isOpen={isCategoryOpen}
         setIsOpen={setCategoryOpen}
-        subCategoryItems={subCategoryItems}
+        subCategory={subCategory}
       />
       <UnitAddModal isOpen={isUnitAddOpen} setIsOpen={setUnitAddOpen} units={units} />
     </div>
   );
 };
 
-export default ItemAddComponent;
+export default ItemCreateComponent;
 
 // useEffect(() => {
 //   axios({

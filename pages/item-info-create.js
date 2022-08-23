@@ -1,11 +1,11 @@
 import React from "react";
-import ItemAddComponent from "../components/category-list";
+import ItemCreateComponent from "../components/lists/item-create-list";
 
 const ItemInfoCreate = () => {
   return (
     <div>
       <div>
-        <ItemAddComponent />
+        <ItemCreateComponent />
       </div>
     </div>
   );

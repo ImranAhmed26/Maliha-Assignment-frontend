@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 
-const SubCategoryAddModal = ({ isOpen, setIsOpen, subCategoryItems }) => {
-  const [newSubCaterogy, setNewSubCategory] = useState();
+const SubCategoryAddModal = ({ isOpen, setIsOpen, subCategory }) => {
+  const [newSubCategory, setNewSubCategory] = useState();
 
   function closeModal() {
     setIsOpen(false);
@@ -12,11 +12,11 @@ const SubCategoryAddModal = ({ isOpen, setIsOpen, subCategoryItems }) => {
     setIsOpen(true);
   }
 
-  console.log("sub items in modal are", subCategoryItems);
+  // console.log("sub items in modal are", subCategoryItems);
   // console.log("new item is", newSubCaterogy);
 
   const addItemHandler = () => {
-    subCategoryItems.push(newSubCaterogy);
+    subCategory.push(newSubCategory);
   };
 
   return (
@@ -63,10 +63,10 @@ const SubCategoryAddModal = ({ isOpen, setIsOpen, subCategoryItems }) => {
                     </button>
                   </div>
                   <div className="mt-2">
-                    {subCategoryItems.map((item, index) => {
+                    {subCategory.map((item, index) => {
                       return (
                         <div className="text-xl font-normal px-6 py-0.5 cursor-default" key={index}>
-                          <div>{item.name}</div>
+                          <div>{item}</div>
                         </div>
                       );
                     })}
@@ -78,10 +78,7 @@ const SubCategoryAddModal = ({ isOpen, setIsOpen, subCategoryItems }) => {
                         className="px-2 py-2 mx-2 rounded focus:outline-none border-2 w-full"
                         placeholder="Add sub category options"
                         onChange={(event) => {
-                          setNewSubCategory({
-                            name: event.target.value,
-                            value: event.target.value.toLowerCase(),
-                          });
+                          setNewSubCategory(event.target.value.toLowerCase());
                         }}
                       />
 
