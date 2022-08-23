@@ -1,3 +1,4 @@
+import Router from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/outline";
@@ -158,7 +159,12 @@ const ItemCreateComponent = () => {
       </div>
       <div className="min-w-[70rem] max-w-[80rem] pt-10">
         <div className="flex justify-between w-full">
-          <div className="p-2 w-32 rounded-md bg-rose-400 cursor-pointer hover:bg-rose-500 transition-all duration-150">
+          <div
+            className="p-2 w-32 rounded-md bg-rose-400 cursor-pointer hover:bg-rose-500 transition-all duration-150"
+            onClick={() => {
+              Router.push("/item-info-page");
+            }}
+          >
             Close
           </div>
           <div className="p-2 w-32 rounded-md bg-green-400 cursor-pointer hover:bg-green-500 transition-all duration-150">
