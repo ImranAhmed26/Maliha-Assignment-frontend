@@ -25,7 +25,7 @@ let units = [
   { name: "pound", value: "pound" },
 ];
 
-const ItemPage = () => {
+const ItemAddComponent = () => {
   // const [category, setCategory] = useState("");
   const [itemType, setItemType] = useState("");
   const [itemName, setItemName] = useState("");
@@ -42,13 +42,13 @@ const ItemPage = () => {
   console.log("sub items inside are ", subCategoryItems);
 
   return (
-    <div className=" text-gray-700 pt-20 mx-20 ">
-      <div className="flex gap-6  min-w-[70rem] max-w-[80rem] items-center justify-center ">
+    <div className=" text-gray-700 pt-20 mx-20 text-center font-medium text-xl cursor-default">
+      <div className="flex gap-9 py-2 min-w-[70rem] max-w-[80rem] items-center justify-center bg-white m-1 rounded-md ">
         <div className="">
           <select
             name="itemType"
             id="type"
-            className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer"
+            className="bg-gray-100 p-2 rounded font-medium outline-none cursor-pointer"
             onChange={(event) => {
               event.preventDefault;
               setItemType(event.target.value);
@@ -142,7 +142,7 @@ const ItemPage = () => {
   );
 };
 
-export default ItemPage;
+export default ItemAddComponent;
 
 // useEffect(() => {
 //   axios({
