@@ -9,16 +9,11 @@ import { baseUrl } from "../../lib/api";
 import SubCategoryAddModal from "../modal/sub-category-add-modal";
 import UnitAddModal from "../modal/unit-add-modal";
 
-let units = [
-  { name: "kg", value: "kg" },
-  { name: "pound", value: "pound" },
-];
-
 const ItemCreateComponent = () => {
   const [itemType, setItemType] = useState("");
   const [itemName, setItemName] = useState("");
   const [subCategory, setSubCategory] = useState([]);
-  const [unit, setUnitName] = useState("");
+  const [unit, setUnitName] = useState([]);
   const [stockLimit, setStockLimit] = useState();
 
   const [isCategoryOpen, setCategoryOpen] = useState(false);
@@ -55,8 +50,8 @@ const ItemCreateComponent = () => {
   console.log("body is ", body);
 
   return (
-    <div className=" text-gray-700 pt-20 mx-20 text-center font-medium text-xl cursor-default">
-      <div className="flex gap-9 py-2 min-w-[70rem] max-w-[80rem] items-center justify-center bg-white m-1 rounded-md ">
+    <div className=" text-gray-700 pt-20 mx-20 text-center font-medium text-2xl cursor-default flex flex-col justify-center items-center">
+      <div className="flex gap-4 p-2 min-w-[70rem] max-w-[80rem] items-center justify-center bg-white m-1 rounded-md ">
         <div className="">
           <select
             name="itemType"
@@ -80,19 +75,19 @@ const ItemCreateComponent = () => {
         <div>
           <input
             placeholder="Item Name"
-            className="outline-none border rounded-sm p-1 text-center"
+            className="outline-none border rounded-sm p-2 text-center"
             onChange={(event) => {
               event.preventDefault;
               setItemName(event.target.value);
             }}
           />
         </div>
-        <div className="flex items-center gap-1">
-          <div className="px-1">
+        <div className="flex gap-1">
+          <div className="">
             <select
               name="sub-category"
               id="sub-category"
-              className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer"
+              className="bg-gray-100 p-2 rounded font-medium outline-none cursor-pointer"
               onChange={(event) => {
                 event.preventDefault;
                 setSubCategory(event.target.value);
@@ -108,7 +103,7 @@ const ItemCreateComponent = () => {
               })}
             </select>
           </div>
-          <div className="flex w-8" onClick={() => setCategoryOpen(true)}>
+          <div className="flex w-10" onClick={() => setCategoryOpen(true)}>
             <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
           </div>
         </div>
@@ -117,34 +112,38 @@ const ItemCreateComponent = () => {
             <select
               name="unit"
               id="unit"
-              className="bg-gray-100 p-1 rounded font-medium outline-none cursor-pointer items-center"
+              className="bg-gray-100 p-2 rounded font-medium outline-none cursor-pointer items-center"
               onChange={(event) => {
                 event.preventDefault;
                 setUnitName(event.target.value);
               }}
             >
-              <option value="volvo">Unit Name</option>
-              <option value="saab">KG</option>
-              <option value="mercedes">Gram</option>
-              <option value="audi">Pound</option>
+              <option value="">Unit Name</option>
+              {unit.map((item, i) => {
+                return (
+                  <option key={i} value={`${item}`}>
+                    {item}
+                  </option>
+                );
+              })}
             </select>
           </div>
-          <div className="flex w-8" onClick={() => setUnitAddOpen(true)}>
+          <div className="flex w-10" onClick={() => setUnitAddOpen(true)}>
             <PlusCircleIcon className="text-fuchsia-500 cursor-pointer" />
           </div>
         </div>
         <div>
           <input
             placeholder="Stock Limit"
-            className="outline-none border rounded-sm p-1 text-center"
+            className="outline-none border rounded-sm p-2 text-center"
             onChange={(event) => {
               event.preventDefault;
               setStockLimit(event.target.value);
             }}
           />
         </div>
-        <div className="flex gap-2">
-          <div className="w-8">
+        <div className="flex gap-1">
+          <div className="w-10">
             <PlusCircleIcon
               className="text-fuchsia-500 cursor-pointer"
               onClick={() => {
@@ -152,8 +151,18 @@ const ItemCreateComponent = () => {
               }}
             />
           </div>
-          <div className="w-8">
+          <div className="w-10">
             <XCircleIcon className="text-red-500 cursor-pointer" />
+          </div>
+        </div>
+      </div>
+      <div className="min-w-[70rem] max-w-[80rem] pt-10">
+        <div className="flex justify-between w-full">
+          <div className="p-2 w-32 rounded-md bg-rose-400 cursor-pointer hover:bg-rose-500 transition-all duration-150">
+            Close
+          </div>
+          <div className="p-2 w-32 rounded-md bg-green-400 cursor-pointer hover:bg-green-500 transition-all duration-150">
+            Save
           </div>
         </div>
       </div>
@@ -162,7 +171,7 @@ const ItemCreateComponent = () => {
         setIsOpen={setCategoryOpen}
         subCategory={subCategory}
       />
-      <UnitAddModal isOpen={isUnitAddOpen} setIsOpen={setUnitAddOpen} units={units} />
+      <UnitAddModal isOpen={isUnitAddOpen} setIsOpen={setUnitAddOpen} unit={unit} />
     </div>
   );
 };

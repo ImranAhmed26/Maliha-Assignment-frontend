@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 
-const UnitAddModal = ({ isOpen, setIsOpen, units }) => {
+const UnitAddModal = ({ isOpen, setIsOpen, unit }) => {
   const [newUnitName, setNewUnitName] = useState();
 
   function closeModal() {
@@ -12,11 +12,11 @@ const UnitAddModal = ({ isOpen, setIsOpen, units }) => {
     setIsOpen(true);
   }
 
-  console.log("sub items in modal are", units);
-  console.log("new item is", newUnitName);
+  // console.log("sub items in modal are", unit);
+  // console.log("new item is", newUnitName);
 
   const addItemHandler = () => {
-    units.push(newUnitName);
+    unit.push(newUnitName);
   };
 
   return (
@@ -63,10 +63,10 @@ const UnitAddModal = ({ isOpen, setIsOpen, units }) => {
                     </button>
                   </div>
                   <div className="mt-2">
-                    {units.map((item, index) => {
+                    {unit.map((item, index) => {
                       return (
                         <div className="text-xl font-normal px-6 py-0.5 cursor-default" key={index}>
-                          <div>{item.name}</div>
+                          <div>{item}</div>
                         </div>
                       );
                     })}
@@ -78,10 +78,7 @@ const UnitAddModal = ({ isOpen, setIsOpen, units }) => {
                         className="px-2 py-2 mx-2 rounded focus:outline-none border-2 w-full"
                         placeholder="Add sub category options"
                         onChange={(event) => {
-                          setNewUnitName({
-                            name: event.target.value,
-                            value: event.target.value.toLowerCase(),
-                          });
+                          setNewUnitName(event.target.value.toLowerCase());
                         }}
                       />
 
